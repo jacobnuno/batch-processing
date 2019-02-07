@@ -16,8 +16,6 @@ namespace Programa1
         Batch actualBatch = new Batch();
         List<Process> ConcludedProcesses = new List<Process>();
         Process actualProcess;
-        int leftTime = 0;
-        int executionTime = 0;
         int counter = 0;
         int noBatch = 1;
 
@@ -27,15 +25,16 @@ namespace Programa1
             InitializeComponent();
             timer.Start();
             StarProcessing();
+            this.Focus();
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            if(leftTime > 0)
+            if (actualProcess.leftTime > 0)
             {
                 lblCounter.Text = (++counter).ToString();
-                lblLeftTime.Text = (--leftTime).ToString();
-                lblExecutionTime.Text = (++executionTime).ToString();
+                lblLeftTime.Text = (--actualProcess.leftTime).ToString();
+                lblExecutionTime.Text = (++actualProcess.executionTime).ToString();
             } else if (actualBatch.Processes.Count > 0)
             {
                 
@@ -72,8 +71,6 @@ namespace Programa1
             actualProcess = actualBatch.Processes.Dequeue();
             actualProcess.noBatch = noBatch;
             SetActualBatch(actualBatch);
-            executionTime = actualProcess.maxTime;
-            leftTime = actualProcess.maxTime;
             SetActualProcess(actualProcess);
             llbPendingBatches.Text = batches.Count.ToString();
         }
@@ -82,12 +79,10 @@ namespace Programa1
         {
             lblProcessId.Text = p.id.ToString();
             lblNameDeveloper.Text = p.nameDeveloper;
-            lblOperator.Text = p.myOperator;
+            lblOperator.Text = p.operation;
             lblMaxTime.Text = p.maxTime.ToString();
 
-            lblExecutionTime.Text = p.maxTime.ToString();
-            leftTime = p.maxTime;
-            executionTime = 0;
+            lblExecutionTime.Text = p.executionTime.ToString();
         }
 
         private void SetActualBatch(Batch l)
@@ -95,13 +90,16 @@ namespace Programa1
             DataTable myDataTable = new DataTable();
             myDataTable.Columns.Add("Nombre");
             myDataTable.Columns.Add("TME");
+            myDataTable.Columns.Add("TT");
+            myDataTable.Columns.Add("TR");
 
             foreach (Process p in l.Processes)
             {
-                myDataTable.Rows.Add(p.nameDeveloper, p.maxTime);
+                myDataTable.Rows.Add(p.nameDeveloper, p.maxTime, p.executionTime, p.leftTime);
             }
 
             dgvBatchExecuting.DataSource = myDataTable;
+            DataGridViewAutoSize(dgvBatchExecuting);
         }
 
         private void SetConcludedProcesses(List<Process> pro)
@@ -118,8 +116,68 @@ namespace Programa1
             }
 
             dgvConcluded.DataSource = myDataTable;
+            DataGridViewAutoSize(dgvConcluded);
         }
 
-        
+        private void DataGridViewAutoSize(DataGridView grd)
+        {
+            //set autosize mode
+            grd.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            grd.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            grd.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            //datagrid has calculated it's widths so we can store them
+            for (int i = 0; i <= grd.Columns.Count - 1; i++)
+            {
+                //store autosized widths
+                int colw = grd.Columns[i].Width;
+                //remove autosizing
+                grd.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                //set width to calculated by autosize
+                grd.Columns[i].Width = colw;
+            }
+        }
+
+        private void frmProcessing_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch(e.KeyValue)
+            {
+                case (int)Keys.I:
+                    Batch myBatch = new Batch();
+                    myBatch = actualBatch;
+                    actualBatch.Processes.Enqueue(actualProcess);
+                    if(myBatch.Processes.Count > 0)
+                    {
+                        actualProcess = myBatch.Processes.Dequeue();
+                        SetActualBatch(myBatch);
+                    } else
+                    {
+                        actualProcess = actualBatch.Processes.Dequeue();
+                        SetActualBatch(actualBatch);
+                    }
+                    SetActualProcess(actualProcess);
+                    break;
+
+                case (int)Keys.E:
+                    actualProcess.result = "Error";
+                    actualProcess.leftTime = 0;
+                    break;
+
+                case (int)Keys.P:
+                    timer.Stop(); /*
+                    while(frmProcessing_KeyDown() != (int)Keys.C)
+                    {
+                        timer.Start();
+                    } */
+                    break;
+
+                case (int)Keys.C:
+                    timer.Start();
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }

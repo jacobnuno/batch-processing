@@ -11,10 +11,11 @@ using System.Windows.Forms;
 namespace Programa1
 {
     public partial class frmAddProcesses : Form
-    {
+    {/*
         int totalProcesses = 0;
         int cont = 0;
-        Queue<Process> Processess = new Queue<Process>();
+        int ids = 0;
+        Queue<Process> Processess = new Queue<Process>(); */
 
         public frmAddProcesses()
         {
@@ -23,30 +24,62 @@ namespace Programa1
 
         public frmAddProcesses(int number)
         {
+            InitializeComponent(); /*
             this.totalProcesses = number;
-            /*int[] ids = new int[totalProcesses];
-
-            
-            for (int i = 0; i < 10; i++)
-            {
-                ids[i] = 0;
-            } */
-            InitializeComponent();
             FillOperatorsComboBox();
             ClearFields();
-            lblStatus.Text = cont.ToString() + " / " + totalProcesses.ToString() + " procesos";
+            lblStatus.Text = cont.ToString() + " / " + totalProcesses.ToString() + " procesos"; */
+        }
+
+        private int GetRandomNumber(int max, int min)
+        {
+            Random random = new Random();
+            return Convert.ToInt32(Math.Round(random.NextDouble() * (max - min) + min));
+        }
+
+        private static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random randomString = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[randomString.Next(s.Length)]).ToArray());
+        }
+
+        private char GetRandomOperator()
+        {
+            Random random = new Random();
+            char myOperator = ' ';
+            switch (GetRandomNumber(5, 1))
+            {
+                case 1:
+                    myOperator = '+';
+                    break;
+                case 2:
+                    myOperator = '-';
+                    break;
+                case 3:
+                    myOperator = '*';
+                    break;
+                case 4:
+                    myOperator = '/';
+                    break;
+                case 5:
+                    myOperator = '%';
+                    break;
+            }
+            return myOperator;
         }
 
         private void btnAddProcess_Click(object sender, EventArgs e)
-        {
-            string nameDeveloper = txtDeveloper.Text;
-            int number1 = Convert.ToInt32(Math.Round(inputNumber1.Value, 0));
-            int number2 = Convert.ToInt32(Math.Round(inputNumber2.Value, 0));
-            int maxTime = Convert.ToInt32(Math.Round(inputMaxTime.Value, 0));
-            int idProcess = Convert.ToInt32(Math.Round(inputIDProcess.Value, 0));
-            float result = 0;
-            string operation = "";
-
+        { /*
+            string nameDeveloper = RandomString(5);
+            int number1 = GetRandomNumber(100, 1);
+            int number2 = GetRandomNumber(100, 1);
+            int maxTime = GetRandomNumber(30, 7);
+            int idProcess = ++ids;
+            string result = GetRandomOperator(number1, number2);
+            string operation = number1.ToString() + myOperator + number2.ToString();
+            
             if (number1 < 0 || number2 < 0 || maxTime <= 0 || idProcess <= 0 || string.IsNullOrEmpty(nameDeveloper))
             {
                 MessageBox.Show("Algun dato es incorrecto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -66,33 +99,30 @@ namespace Programa1
                     MessageBox.Show("No se puede repetir id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-            }
+            } 
 
-
-            operation = number1 + cboOperator.SelectedItem.ToString() + number2;
-
-            switch (cboOperator.SelectedItem.ToString()[0])
+            switch (myOperator)
             {
                 case '+':
-                    result = number1 + number2;
+                    result = (number1 + number2).ToString();
                     break;
                 case '-':
-                    result = number1 - number2;
+                    result = (number1 - number2).ToString();
                     break;
                 case '*':
-                    result = number1 * number2;
+                    result = (number1 * number2).ToString();
                     break;
 
                 case '/':
-                    result = number1 / number2;
+                    result = (number1 / number2).ToString();
                     break;
 
                 case '%':
-                    result = number1 % number2;
+                    result = (number1 % number2).ToString();
                     break;
 
                 default:
-                    result = 0;
+                    result = "";
                     break;
             }
             Process newProcess = new Process(nameDeveloper, operation, cboOperator.SelectedItem.ToString(), result, maxTime, idProcess);
@@ -132,7 +162,7 @@ namespace Programa1
             {
                 lblStatus.Text = cont.ToString() + " / " + totalProcesses.ToString() + " procesos";
                 ClearFields();
-            }
+            } */
         }
 
         public void FillOperatorsComboBox()
