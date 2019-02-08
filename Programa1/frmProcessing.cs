@@ -18,6 +18,7 @@ namespace Programa1
         Process actualProcess;
         int counter = 0;
         int noBatch = 1;
+        bool isPaused = false;
 
         public frmProcessing(Queue<Batch> batches)
         {
@@ -78,7 +79,6 @@ namespace Programa1
         public void SetActualProcess(Process p)
         {
             lblProcessId.Text = p.id.ToString();
-            lblNameDeveloper.Text = p.nameDeveloper;
             lblOperator.Text = p.operation;
             lblMaxTime.Text = p.maxTime.ToString();
 
@@ -87,15 +87,23 @@ namespace Programa1
 
         private void SetActualBatch(Batch l)
         {
+            /* 
+            tiempo de llegada
+            tiempo de finalización
+            tiempo de servicio = tr - te
+            tiempo de espera = tr - ts
+            tiempo de retorno = tf - tllegada
+            tiempo de respuesta = tiempo de llegada - tiempo actual
+            */
             DataTable myDataTable = new DataTable();
-            myDataTable.Columns.Add("Nombre");
+            myDataTable.Columns.Add("ID");
             myDataTable.Columns.Add("TME");
             myDataTable.Columns.Add("TT");
             myDataTable.Columns.Add("TR");
 
             foreach (Process p in l.Processes)
             {
-                myDataTable.Rows.Add(p.nameDeveloper, p.maxTime, p.executionTime, p.leftTime);
+                myDataTable.Rows.Add(p.id, p.maxTime, p.executionTime, p.leftTime);
             }
 
             dgvBatchExecuting.DataSource = myDataTable;
@@ -143,36 +151,47 @@ namespace Programa1
             switch(e.KeyValue)
             {
                 case (int)Keys.I:
-                    Batch myBatch = new Batch();
-                    myBatch = actualBatch;
-                    actualBatch.Processes.Enqueue(actualProcess);
-                    if(myBatch.Processes.Count > 0)
+                    if(isPaused == false)
                     {
-                        actualProcess = myBatch.Processes.Dequeue();
-                        SetActualBatch(myBatch);
-                    } else
-                    {
-                        actualProcess = actualBatch.Processes.Dequeue();
-                        SetActualBatch(actualBatch);
+                        Batch myBatch = new Batch();
+                        myBatch = actualBatch;
+                        actualBatch.Processes.Enqueue(actualProcess);
+                        if (myBatch.Processes.Count > 0)
+                        {
+                            actualProcess = myBatch.Processes.Dequeue();
+                            SetActualBatch(myBatch);
+                        }
+                        else
+                        {
+                            actualProcess = actualBatch.Processes.Dequeue();
+                            SetActualBatch(actualBatch);
+                        }
+                        SetActualProcess(actualProcess);
                     }
-                    SetActualProcess(actualProcess);
                     break;
 
                 case (int)Keys.E:
-                    actualProcess.result = "Error";
-                    actualProcess.leftTime = 0;
+                    if (isPaused == false)
+                    {
+                        actualProcess.result = "Error";
+                        actualProcess.leftTime = 0;
+                    } 
                     break;
 
                 case (int)Keys.P:
-                    timer.Stop(); /*
-                    while(frmProcessing_KeyDown() != (int)Keys.C)
+                    if(isPaused == false)
                     {
-                        timer.Start();
-                    } */
+                        timer.Stop();
+                        isPaused = true;
+                    }
                     break;
 
                 case (int)Keys.C:
-                    timer.Start();
+                    if(isPaused)
+                    {
+                        timer.Start();
+                        isPaused = false;
+                    }
                     break;
 
                 default:
