@@ -49,8 +49,10 @@
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.lblCounter = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.dgvLockedProcesses = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConcluded)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBatchExecuting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLockedProcesses)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvConcluded
@@ -84,9 +86,9 @@
             this.llbPending.AutoSize = true;
             this.llbPending.Location = new System.Drawing.Point(36, 22);
             this.llbPending.Name = "llbPending";
-            this.llbPending.Size = new System.Drawing.Size(121, 17);
+            this.llbPending.Size = new System.Drawing.Size(97, 17);
             this.llbPending.TabIndex = 2;
-            this.llbPending.Text = "Lotes pendientes:";
+            this.llbPending.Text = "Lotes nuevos:";
             // 
             // llbPendingBatches
             // 
@@ -100,11 +102,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(82, 138);
+            this.label1.Location = new System.Drawing.Point(172, 138);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 17);
+            this.label1.Size = new System.Drawing.Size(92, 17);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Lote en Ejecución";
+            this.label1.Text = "Cola de listos";
             // 
             // label2
             // 
@@ -236,11 +238,24 @@
             this.label10.TabIndex = 20;
             this.label10.Text = "Tiempo:";
             // 
+            // dgvLockedProcesses
+            // 
+            this.dgvLockedProcesses.AllowUserToAddRows = false;
+            this.dgvLockedProcesses.AllowUserToDeleteRows = false;
+            this.dgvLockedProcesses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLockedProcesses.Location = new System.Drawing.Point(429, 465);
+            this.dgvLockedProcesses.Name = "dgvLockedProcesses";
+            this.dgvLockedProcesses.ReadOnly = true;
+            this.dgvLockedProcesses.RowTemplate.Height = 24;
+            this.dgvLockedProcesses.Size = new System.Drawing.Size(385, 208);
+            this.dgvLockedProcesses.TabIndex = 21;
+            // 
             // frmProcessing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1324, 481);
+            this.ClientSize = new System.Drawing.Size(1324, 700);
+            this.Controls.Add(this.dgvLockedProcesses);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.lblCounter);
             this.Controls.Add(this.lblLeftTime);
@@ -265,6 +280,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProcessing_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvConcluded)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBatchExecuting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLockedProcesses)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,5 +308,6 @@
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label lblCounter;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridView dgvLockedProcesses;
     }
 }

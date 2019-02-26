@@ -17,6 +17,15 @@ namespace Programa1
         public char myOperator = ' ';
         public string result = "";
         public int noBatch = 0;
+        public int locked = 0;
+        // new times
+        public int t_llegada = 0;
+        public int t_finalizacion = 0;
+        public int t_retorno = 0;
+        public int t_respuesta = 0;
+        public int t_espera = 0;
+        public int t_servicio = 0;
+
 
         public Process(string nameDeveloper, string operation, char myOperator, string result, int maxTime, int idProcess)
         {

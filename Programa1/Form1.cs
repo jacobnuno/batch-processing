@@ -79,7 +79,7 @@ namespace Programa1
                 string nameDeveloper = RandomString(5);
                 int number1 = GetRandomNumber(100, 1);
                 int number2 = GetRandomNumber(100, 1);
-                int maxTime = GetRandomNumber(30, 7);
+                int maxTime = GetRandomNumber(18, 7);
                 int idProcess = ++ids;
                 string result = "";
                 char myOperator = GetRandomOperator();
@@ -111,7 +111,7 @@ namespace Programa1
                 }
                 Process newProcess = new Process(nameDeveloper, operation, myOperator, result, maxTime, idProcess);
                 Processess.Enqueue(newProcess);
-                cont++;
+                /*cont++;
                 int i = 0;
                 if (cont == totalProcesses)
                 {
@@ -142,8 +142,11 @@ namespace Programa1
                     frmProcessing process = new frmProcessing(batches);
                     this.Hide();
                     process.ShowDialog();
-                }
+                } */
             }
+            frmProcessing process = new frmProcessing(Processess);
+            this.Hide();
+            process.ShowDialog();
         }
     }
 }
