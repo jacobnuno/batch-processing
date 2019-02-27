@@ -22,9 +22,10 @@ namespace Programa1
         public int t_llegada = 0;
         public int t_finalizacion = 0;
         public int t_retorno = 0;
-        public int t_respuesta = 0;
+        public int t_respuesta = -1;
         public int t_espera = 0;
         public int t_servicio = 0;
+        public int leftTimeAux = 0;
 
 
         public Process(string nameDeveloper, string operation, char myOperator, string result, int maxTime, int idProcess)

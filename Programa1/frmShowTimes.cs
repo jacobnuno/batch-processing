@@ -48,6 +48,10 @@ namespace Programa1
             myDataTable.Columns.Add("TE");
             myDataTable.Columns.Add("TS");
 
+            //myDataTable.Columns.Add("Tleft");
+            //myDataTable.Columns.Add("TME");
+            //myDataTable.Columns.Add("TExe");
+
             foreach (Process p in pro)
             {
                 myDataTable.Rows.Add(p.id, p.t_llegada, p.t_finalizacion, p.t_retorno, p.t_respuesta, p.t_espera, p.t_servicio);

@@ -12,11 +12,9 @@ namespace Programa1
 {
     public partial class frmProcessing : Form
     {
-        //Queue<Batch> batches = new Queue<Batch>();
         Queue<Process> allProcesses = new Queue<Process>();
         Queue<Process> readyProcesses = new Queue<Process>();
         Queue<Process> lockedProcesses = new Queue<Process>();
-        // Batch actualBatch = new Batch();
         List<Process> ConcludedProcesses = new List<Process>();
         Process actualProcess;
         int counter = 0;
@@ -42,6 +40,10 @@ namespace Programa1
                 {
                     actualProcess = readyProcesses.Dequeue();
                     SetActualProcess(actualProcess);
+                    if (actualProcess.t_respuesta == -1)
+                    {
+                        actualProcess.t_respuesta = counter - actualProcess.t_llegada;
+                    }
                 }
             }
             else if (actualProcess.leftTime > 0)
@@ -49,11 +51,11 @@ namespace Programa1
                 lblCounter.Text = (++counter).ToString();
                 SetLockedProcesses();
                 lblLeftTime.Text = (--actualProcess.leftTime).ToString();
+                actualProcess.leftTimeAux = actualProcess.leftTime;
                 lblExecutionTime.Text = (++actualProcess.executionTime).ToString();
             }
             else if (allProcesses.Count > 0)
             {
-
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 ConcludedProcesses.Add(actualProcess);
                 Process newProcess = allProcesses.Dequeue();
@@ -63,28 +65,31 @@ namespace Programa1
                 actualProcess = readyProcesses.Dequeue();
                 SetReadyProcesses(readyProcesses);
                 SetActualProcess(actualProcess);
-                actualProcess.t_respuesta = counter - actualProcess.t_llegada;
+                if (actualProcess.t_respuesta == -1)
+                {
+                    actualProcess.t_respuesta = counter - actualProcess.t_llegada;
+                }
 
                 SetConcludedProcesses(ConcludedProcesses);
 
             }
             else if (readyProcesses.Count > 0)
             {
-                /*
-                actualBatch = batches.Dequeue();
-                noBatch++;
-                llbPendingBatches.Text = batches.Count.ToString(); */
-
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 ConcludedProcesses.Add(actualProcess);
                 SetConcludedProcesses(ConcludedProcesses);
                 actualProcess = readyProcesses.Dequeue();
                 SetActualProcess(actualProcess);
-                if(actualProcess.t_respuesta == 0)
+                if (actualProcess.t_respuesta == -1)
                 {
                     actualProcess.t_respuesta = counter - actualProcess.t_llegada;
                 }
                 SetReadyProcesses(readyProcesses);
+            }
+            else if (lockedProcesses.Count > 0)
+            {
+                actualProcess = null;
+                SetActualProcess(actualProcess);
             }
             else
             {
@@ -108,7 +113,7 @@ namespace Programa1
         {
             actualProcess = allProcesses.Dequeue();
             SetActualProcess(actualProcess);
-            actualProcess.t_respuesta = counter - actualProcess.t_llegada;
+            actualProcess.t_respuesta = 0;
             if (allProcesses.Count > 1)
             {
                 readyProcesses.Enqueue(allProcesses.Dequeue()); // second process ready to be execute
@@ -185,10 +190,14 @@ namespace Programa1
             {
                 p.t_retorno = p.t_finalizacion - p.t_llegada;
                 //p.t_respuesta = p.t_retorno;
-                if(p.t_servicio == 0)
+                /*if(p.t_servicio == 0)
                 {
                     p.t_servicio = p.maxTime;
-                }
+                } else
+                {
+                    p.t_servicio = p.executionTime;
+                }*/
+                p.t_servicio = p.executionTime;
                 p.t_espera = p.t_retorno - p.t_servicio;
             }
             frmShowTimes process = new frmShowTimes(ConcludedProcesses);
@@ -250,20 +259,7 @@ namespace Programa1
             {
                 case (int)Keys.I:
                     if(isPaused == false)
-                    { /*
-                        Batch myBatch = new Batch();
-                        myBatch = actualBatch;
-                        actualBatch.Processes.Enqueue(actualProcess);
-                        if (myBatch.Processes.Count > 0)
-                        {
-                            actualProcess = myBatch.Processes.Dequeue();
-                            SetActualBatch(myBatch);
-                        }
-                        else
-                        {
-                            actualProcess = actualBatch.Processes.Dequeue();
-                            SetActualBatch(actualBatch);
-                        } */
+                    {
                         if(actualProcess != null)
                         {
                             actualProcess.locked = 0;
@@ -273,6 +269,10 @@ namespace Programa1
                             {
                                 actualProcess = readyProcesses.Dequeue();
                                 SetActualProcess(actualProcess);
+                                if (actualProcess.t_respuesta == -1)
+                                {
+                                    actualProcess.t_respuesta = counter - actualProcess.t_llegada;
+                                }
                                 SetReadyProcesses(readyProcesses);
                             } else
                             {
@@ -289,10 +289,12 @@ namespace Programa1
                 case (int)Keys.E:
                     if (isPaused == false)
                     {
-                        actualProcess.result = "Error";
-                        actualProcess.t_servicio = actualProcess.maxTime - actualProcess.leftTime;
-                        actualProcess.leftTime = 0;
-                        //Process();
+                        if(actualProcess != null)
+                        {
+                            actualProcess.result = "Error";
+                            //actualProcess.t_servicio = actualProcess.maxTime - actualProcess.executionTime;
+                            actualProcess.leftTime = 0;
+                        }
                     } 
                     break;
 
