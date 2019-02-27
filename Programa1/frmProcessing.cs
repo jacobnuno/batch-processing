@@ -18,7 +18,6 @@ namespace Programa1
         List<Process> ConcludedProcesses = new List<Process>();
         Process actualProcess;
         int counter = 0;
-        //int noBatch = 1;
         bool isPaused = false;
 
         public frmProcessing(Queue<Process> Processes)
@@ -99,14 +98,7 @@ namespace Programa1
                 llbPendingBatches.Text = "0";
                 timer.Stop();
                 CalculateTimes();
-                //MessageBox.Show("Se han terminado todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private void Process()
-        {
-            
-            //System.Threading.Thread.Sleep(1000);
         }
 
         public void StarProcessing()
@@ -140,7 +132,6 @@ namespace Programa1
                 lblLeftTime.Text = "null";
                 lblExecutionTime.Text = "null";
             }
-            
         }
 
         private void SetReadyProcesses(Queue<Process> processes)
@@ -189,14 +180,6 @@ namespace Programa1
             foreach (Process p in ConcludedProcesses)
             {
                 p.t_retorno = p.t_finalizacion - p.t_llegada;
-                //p.t_respuesta = p.t_retorno;
-                /*if(p.t_servicio == 0)
-                {
-                    p.t_servicio = p.maxTime;
-                } else
-                {
-                    p.t_servicio = p.executionTime;
-                }*/
                 p.t_servicio = p.executionTime;
                 p.t_espera = p.t_retorno - p.t_servicio;
             }
@@ -231,7 +214,6 @@ namespace Programa1
             }
 
             dgvLockedProcesses.DataSource = myDataTable;
-            //DataGridViewAutoSize(dgvLockedProcesses);
         }
 
         private void DataGridViewAutoSize(DataGridView grd)
@@ -281,8 +263,6 @@ namespace Programa1
                             }
                             
                         }
-
-                        //Process();
                     }
                     break;
 
@@ -292,7 +272,6 @@ namespace Programa1
                         if(actualProcess != null)
                         {
                             actualProcess.result = "Error";
-                            //actualProcess.t_servicio = actualProcess.maxTime - actualProcess.executionTime;
                             actualProcess.leftTime = 0;
                         }
                     } 
