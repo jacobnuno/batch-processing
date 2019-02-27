@@ -43,10 +43,14 @@ namespace Programa1
             myDataTable.Columns.Add("ID");
             myDataTable.Columns.Add("TL");
             myDataTable.Columns.Add("TF");
+            myDataTable.Columns.Add("TRet");
+            myDataTable.Columns.Add("TRes");
+            myDataTable.Columns.Add("TE");
+            myDataTable.Columns.Add("TS");
 
             foreach (Process p in pro)
             {
-                myDataTable.Rows.Add(p.id, p.t_llegada, p.t_finalizacion);
+                myDataTable.Rows.Add(p.id, p.t_llegada, p.t_finalizacion, p.t_retorno, p.t_respuesta, p.t_espera, p.t_servicio);
             }
 
             dgvProcessesTimes.DataSource = myDataTable;

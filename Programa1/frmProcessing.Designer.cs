@@ -50,6 +50,7 @@
             this.lblCounter = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.dgvLockedProcesses = new System.Windows.Forms.DataGridView();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConcluded)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBatchExecuting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLockedProcesses)).BeginInit();
@@ -86,9 +87,9 @@
             this.llbPending.AutoSize = true;
             this.llbPending.Location = new System.Drawing.Point(36, 22);
             this.llbPending.Name = "llbPending";
-            this.llbPending.Size = new System.Drawing.Size(97, 17);
+            this.llbPending.Size = new System.Drawing.Size(121, 17);
             this.llbPending.TabIndex = 2;
-            this.llbPending.Text = "Lotes nuevos:";
+            this.llbPending.Text = "Procesos nuevos:";
             // 
             // llbPendingBatches
             // 
@@ -218,6 +219,7 @@
             // 
             // timer
             // 
+            this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // lblCounter
@@ -243,18 +245,28 @@
             this.dgvLockedProcesses.AllowUserToAddRows = false;
             this.dgvLockedProcesses.AllowUserToDeleteRows = false;
             this.dgvLockedProcesses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvLockedProcesses.Location = new System.Drawing.Point(429, 465);
+            this.dgvLockedProcesses.Location = new System.Drawing.Point(429, 480);
             this.dgvLockedProcesses.Name = "dgvLockedProcesses";
             this.dgvLockedProcesses.ReadOnly = true;
             this.dgvLockedProcesses.RowTemplate.Height = 24;
             this.dgvLockedProcesses.Size = new System.Drawing.Size(385, 208);
             this.dgvLockedProcesses.TabIndex = 21;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(539, 448);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(196, 17);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Cola de procesos bloqueados";
+            // 
             // frmProcessing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 700);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.dgvLockedProcesses);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.lblCounter);
@@ -309,5 +321,6 @@
         private System.Windows.Forms.Label lblCounter;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DataGridView dgvLockedProcesses;
+        private System.Windows.Forms.Label label4;
     }
 }

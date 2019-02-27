@@ -41,16 +41,16 @@
             this.dgvProcessesTimes.Name = "dgvProcessesTimes";
             this.dgvProcessesTimes.ReadOnly = true;
             this.dgvProcessesTimes.RowTemplate.Height = 24;
-            this.dgvProcessesTimes.Size = new System.Drawing.Size(689, 259);
+            this.dgvProcessesTimes.Size = new System.Drawing.Size(1081, 329);
             this.dgvProcessesTimes.TabIndex = 2;
             // 
-            // ShowTimes
+            // frmShowTimes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1172, 450);
             this.Controls.Add(this.dgvProcessesTimes);
-            this.Name = "ShowTimes";
+            this.Name = "frmShowTimes";
             this.Text = "ShowTimes";
             ((System.ComponentModel.ISupportInitialize)(this.dgvProcessesTimes)).EndInit();
             this.ResumeLayout(false);

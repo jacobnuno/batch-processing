@@ -15,7 +15,7 @@ namespace Programa1
         //Queue<Batch> batches = new Queue<Batch>();
         Queue<Process> allProcesses = new Queue<Process>();
         Queue<Process> readyProcesses = new Queue<Process>();
-        List<Process> lockedProcesses = new List<Process>();
+        Queue<Process> lockedProcesses = new Queue<Process>();
         // Batch actualBatch = new Batch();
         List<Process> ConcludedProcesses = new List<Process>();
         Process actualProcess;
@@ -34,13 +34,24 @@ namespace Programa1
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (actualProcess.leftTime > 0)
+            if (actualProcess == null)
+            {
+                lblCounter.Text = (++counter).ToString();
+                SetLockedProcesses();
+                if (readyProcesses.Count > 0)
+                {
+                    actualProcess = readyProcesses.Dequeue();
+                    SetActualProcess(actualProcess);
+                }
+            }
+            else if (actualProcess.leftTime > 0)
             {
                 lblCounter.Text = (++counter).ToString();
                 SetLockedProcesses();
                 lblLeftTime.Text = (--actualProcess.leftTime).ToString();
                 lblExecutionTime.Text = (++actualProcess.executionTime).ToString();
-            } else if (allProcesses.Count > 0)
+            }
+            else if (allProcesses.Count > 0)
             {
 
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
@@ -52,10 +63,12 @@ namespace Programa1
                 actualProcess = readyProcesses.Dequeue();
                 SetReadyProcesses(readyProcesses);
                 SetActualProcess(actualProcess);
+                actualProcess.t_respuesta = counter - actualProcess.t_llegada;
 
                 SetConcludedProcesses(ConcludedProcesses);
 
-            } else if(readyProcesses.Count > 0) 
+            }
+            else if (readyProcesses.Count > 0)
             {
                 /*
                 actualBatch = batches.Dequeue();
@@ -67,11 +80,14 @@ namespace Programa1
                 SetConcludedProcesses(ConcludedProcesses);
                 actualProcess = readyProcesses.Dequeue();
                 SetActualProcess(actualProcess);
+                if(actualProcess.t_respuesta == 0)
+                {
+                    actualProcess.t_respuesta = counter - actualProcess.t_llegada;
+                }
                 SetReadyProcesses(readyProcesses);
             }
             else
             {
-                //actualProcess.noBatch = noBatch;
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 ConcludedProcesses.Add(actualProcess);
                 SetConcludedProcesses(ConcludedProcesses);
@@ -80,17 +96,20 @@ namespace Programa1
                 CalculateTimes();
                 //MessageBox.Show("Se han terminado todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            System.Threading.Thread.Sleep(1000);
+        }
+
+        private void Process()
+        {
+            
+            //System.Threading.Thread.Sleep(1000);
         }
 
         public void StarProcessing()
         {
-            //actualBatch = batches.Dequeue();
             actualProcess = allProcesses.Dequeue();
-            //actualProcess.noBatch = noBatch;
-            //SetActualBatch(actualBatch);
             SetActualProcess(actualProcess);
-            if(allProcesses.Count > 1)
+            actualProcess.t_respuesta = counter - actualProcess.t_llegada;
+            if (allProcesses.Count > 1)
             {
                 readyProcesses.Enqueue(allProcesses.Dequeue()); // second process ready to be execute
                 readyProcesses.Enqueue(allProcesses.Dequeue()); // third process ready to be execute
@@ -102,23 +121,25 @@ namespace Programa1
 
         public void SetActualProcess(Process p)
         {
-            lblProcessId.Text = p.id.ToString();
-            lblOperator.Text = p.operation;
-            lblMaxTime.Text = p.maxTime.ToString();
-
-            lblExecutionTime.Text = p.executionTime.ToString();
+            if(p != null)
+            {
+                lblProcessId.Text = p.id.ToString();
+                lblOperator.Text = p.operation;
+                lblMaxTime.Text = p.maxTime.ToString();
+                lblExecutionTime.Text = p.executionTime.ToString();
+            } else
+            {
+                lblProcessId.Text = "null";
+                lblOperator.Text = "null";
+                lblMaxTime.Text = "null";
+                lblLeftTime.Text = "null";
+                lblExecutionTime.Text = "null";
+            }
+            
         }
 
         private void SetReadyProcesses(Queue<Process> processes)
         {
-            /* 
-            tiempo de llegada
-            tiempo de finalización
-            tiempo de servicio = tr - te
-            tiempo de espera = tr - ts
-            tiempo de retorno = tf - tllegada
-            tiempo de respuesta = tiempo de llegada - tiempo actual
-            */
             DataTable myDataTable = new DataTable();
             myDataTable.Columns.Add("ID");
             myDataTable.Columns.Add("TME");
@@ -152,9 +173,23 @@ namespace Programa1
 
         private void CalculateTimes()
         {
+            /* 
+            tiempo de llegada
+            tiempo de finalización
+            tiempo de servicio = tr - te
+            tiempo de espera = tr - ts
+            tiempo de retorno = tf - tllegada
+            tiempo de respuesta = tiempo de llegada - tiempo actual
+            */
             foreach (Process p in ConcludedProcesses)
             {
                 p.t_retorno = p.t_finalizacion - p.t_llegada;
+                //p.t_respuesta = p.t_retorno;
+                if(p.t_servicio == 0)
+                {
+                    p.t_servicio = p.maxTime;
+                }
+                p.t_espera = p.t_retorno - p.t_servicio;
             }
             frmShowTimes process = new frmShowTimes(ConcludedProcesses);
             this.Hide();
@@ -171,12 +206,12 @@ namespace Programa1
             {
                 foreach (Process p in lockedProcesses)
                 {
-                    if (++p.locked == 10)
-                    {
-                        p.locked = 0;
-                        readyProcesses.Enqueue(p);
-                        lockedProcesses.Remove(p);
-                    }
+                    ++p.locked;
+                }
+                if(lockedProcesses.First().locked == 10)
+                {
+                    readyProcesses.Enqueue(lockedProcesses.Dequeue());
+                    SetReadyProcesses(readyProcesses);
                 }
             }
             
@@ -229,12 +264,25 @@ namespace Programa1
                             actualProcess = actualBatch.Processes.Dequeue();
                             SetActualBatch(actualBatch);
                         } */
-                        lockedProcesses.Add(actualProcess);
-                        SetLockedProcesses();
-                        actualProcess = readyProcesses.Dequeue();
-                        SetActualProcess(actualProcess);
-                        SetReadyProcesses(readyProcesses);
-                        //timer_Tick(null, null);
+                        if(actualProcess != null)
+                        {
+                            actualProcess.locked = 0;
+                            lockedProcesses.Enqueue(actualProcess);
+                            SetLockedProcesses();
+                            if(readyProcesses.Count > 0)
+                            {
+                                actualProcess = readyProcesses.Dequeue();
+                                SetActualProcess(actualProcess);
+                                SetReadyProcesses(readyProcesses);
+                            } else
+                            {
+                                actualProcess = null;
+                                SetActualProcess(actualProcess);
+                            }
+                            
+                        }
+
+                        //Process();
                     }
                     break;
 
@@ -242,8 +290,9 @@ namespace Programa1
                     if (isPaused == false)
                     {
                         actualProcess.result = "Error";
+                        actualProcess.t_servicio = actualProcess.maxTime - actualProcess.leftTime;
                         actualProcess.leftTime = 0;
-                        //timer.Start();
+                        //Process();
                     } 
                     break;
 
