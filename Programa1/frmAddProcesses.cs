@@ -31,7 +31,7 @@ namespace Programa1
             lblStatus.Text = cont.ToString() + " / " + totalProcesses.ToString() + " procesos"; */
         }
 
-        private int GetRandomNumber(int max, int min)
+        public int GetRandomNumber(int max, int min)
         {
             Random random = new Random();
             return Convert.ToInt32(Math.Round(random.NextDouble() * (max - min) + min));

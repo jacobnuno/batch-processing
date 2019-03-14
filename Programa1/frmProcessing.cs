@@ -19,10 +19,18 @@ namespace Programa1
         Process actualProcess;
         int counter = 0;
         bool isPaused = false;
+        int counterProcesses = 0;
+        int sumProcesses = 0;
+        const int MAX_Processes = 3;
+        bool isEnded = false;
+        /*int processess_blocked = 0;
+        int processess_blocked = 0;
+        int processess_blocked = 0;*/
 
         public frmProcessing(Queue<Process> Processes)
         {
             this.allProcesses = Processes;
+            this.sumProcesses = Processes.Count;
             InitializeComponent();
             timer.Start();
             StarProcessing();
@@ -31,6 +39,16 @@ namespace Programa1
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            while(counterProcesses < MAX_Processes && allProcesses.Count > 0)
+            {
+                Process newProcess = allProcesses.Dequeue();
+                newProcess.t_llegada = counter;
+                readyProcesses.Enqueue(newProcess);
+                ++counterProcesses;
+                SetReadyProcesses(readyProcesses);
+                llbPendingBatches.Text = allProcesses.Count.ToString();
+            }
+
             if (actualProcess == null)
             {
                 lblCounter.Text = (++counter).ToString();
@@ -38,6 +56,7 @@ namespace Programa1
                 if (readyProcesses.Count > 0)
                 {
                     actualProcess = readyProcesses.Dequeue();
+                    SetReadyProcesses(readyProcesses);
                     SetActualProcess(actualProcess);
                     if (actualProcess.t_respuesta == -1)
                     {
@@ -58,6 +77,7 @@ namespace Programa1
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 ConcludedProcesses.Add(actualProcess);
                 Process newProcess = allProcesses.Dequeue();
+                ++counterProcesses;
                 newProcess.t_llegada = counter;
                 readyProcesses.Enqueue(newProcess);
                 llbPendingBatches.Text = allProcesses.Count.ToString();
@@ -97,13 +117,14 @@ namespace Programa1
                 SetConcludedProcesses(ConcludedProcesses);
                 llbPendingBatches.Text = "0";
                 timer.Stop();
+                isEnded = true;
                 CalculateTimes();
             }
         }
 
         public void StarProcessing()
         {
-            actualProcess = allProcesses.Dequeue();
+            /*actualProcess = allProcesses.Dequeue();
             SetActualProcess(actualProcess);
             actualProcess.t_respuesta = 0;
             if (allProcesses.Count > 1)
@@ -113,7 +134,7 @@ namespace Programa1
                 SetReadyProcesses(readyProcesses);
             }
             
-            llbPendingBatches.Text = allProcesses.Count.ToString();
+            llbPendingBatches.Text = allProcesses.Count.ToString(); */
         }
 
         public void SetActualProcess(Process p)
@@ -153,6 +174,7 @@ namespace Programa1
 
         private void SetConcludedProcesses(List<Process> pro)
         {
+            --counterProcesses;
             DataTable myDataTable = new DataTable();
             myDataTable.Columns.Add("ID");
             myDataTable.Columns.Add("Operación");
@@ -184,7 +206,11 @@ namespace Programa1
                 p.t_espera = p.t_retorno - p.t_servicio;
             }
             frmShowTimes process = new frmShowTimes(ConcludedProcesses);
-            this.Hide();
+            if(isEnded)
+            {
+                this.Hide();
+            }
+            
             process.ShowDialog();
         }
 
@@ -288,6 +314,28 @@ namespace Programa1
                 case (int)Keys.C:
                     if(isPaused)
                     {
+                        timer.Start();
+                        isPaused = false;
+                    }
+                    break;
+
+                case (int)Keys.N:
+                    if (isPaused == false)
+                    {
+                        Process newProcess = new Process("sdafwe", "1+1", '+', "2", 10, ++sumProcesses);
+                        allProcesses.Enqueue(newProcess);
+                        llbPendingBatches.Text = allProcesses.Count.ToString();
+                    }
+                    break;
+
+                case (int)Keys.T:
+                    // diep.io
+                    if (isPaused == false)
+                    {
+                        timer.Stop();
+                        isPaused = true;
+                        CalculateTimes();
+                        MessageBox.Show("lala", "no se", MessageBoxButtons.OK);
                         timer.Start();
                         isPaused = false;
                     }

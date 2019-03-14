@@ -13,7 +13,6 @@ namespace Programa1
     public partial class Form1 : Form
     {
         int totalProcesses = 0;
-        int cont = 0;
         int ids = 0;
         Queue<Process> Processess = new Queue<Process>();
 
@@ -34,7 +33,7 @@ namespace Programa1
             AddProcessess();
         }
 
-        private static Random random = new Random();
+        /*private static Random random = new Random();
 
         private int GetRandomNumber(int max, int min)
         {
@@ -70,19 +69,19 @@ namespace Programa1
                     break;
             }
             return myOperator;
-        }
+        }*/
 
         private void AddProcessess()
         {
             for(int k = 0; k < totalProcesses; k++)
             {
-                string nameDeveloper = RandomString(5);
-                int number1 = GetRandomNumber(100, 1);
-                int number2 = GetRandomNumber(100, 1);
-                int maxTime = GetRandomNumber(18, 7);
+                string nameDeveloper = Process.RandomString(5);
+                int number1 = Process.GetRandomNumber(100, 1);
+                int number2 = Process.GetRandomNumber(100, 1);
+                int maxTime = Process.GetRandomNumber(18, 7);
                 int idProcess = ++ids;
                 string result = "";
-                char myOperator = GetRandomOperator();
+                char myOperator = Process.GetRandomOperator();
                 string operation = number1.ToString() + myOperator + number2.ToString();
 
                 switch (myOperator)

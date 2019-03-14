@@ -38,5 +38,43 @@ namespace Programa1
             this.myOperator = myOperator;
             this.result = result;
         }
+
+        private static Random random = new Random();
+
+        public static int GetRandomNumber(int max, int min)
+        {
+            return Convert.ToInt32(Math.Round(random.NextDouble() * (max - min) + min));
+        }
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public static char GetRandomOperator()
+        {
+            char myOperator = ' ';
+            switch (GetRandomNumber(5, 1))
+            {
+                case 1:
+                    myOperator = '+';
+                    break;
+                case 2:
+                    myOperator = '-';
+                    break;
+                case 3:
+                    myOperator = '*';
+                    break;
+                case 4:
+                    myOperator = '/';
+                    break;
+                case 5:
+                    myOperator = '%';
+                    break;
+            }
+            return myOperator;
+        }
     }
 }
