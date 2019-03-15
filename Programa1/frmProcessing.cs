@@ -16,6 +16,7 @@ namespace Programa1
         Queue<Process> readyProcesses = new Queue<Process>();
         Queue<Process> lockedProcesses = new Queue<Process>();
         List<Process> ConcludedProcesses = new List<Process>();
+        List<Process> BCP = new List<Process>();
         Process actualProcess;
         int counter = 0;
         bool isPaused = false;
@@ -75,6 +76,7 @@ namespace Programa1
             else if (allProcesses.Count > 0)
             {
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
+                actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
                 Process newProcess = allProcesses.Dequeue();
                 ++counterProcesses;
@@ -95,6 +97,7 @@ namespace Programa1
             else if (readyProcesses.Count > 0)
             {
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
+                actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
                 SetConcludedProcesses(ConcludedProcesses);
                 actualProcess = readyProcesses.Dequeue();
@@ -113,6 +116,7 @@ namespace Programa1
             else
             {
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
+                actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
                 SetConcludedProcesses(ConcludedProcesses);
                 llbPendingBatches.Text = "0";
@@ -124,17 +128,11 @@ namespace Programa1
 
         public void StarProcessing()
         {
-            /*actualProcess = allProcesses.Dequeue();
+            actualProcess = allProcesses.Dequeue();
             SetActualProcess(actualProcess);
-            actualProcess.t_respuesta = 0;
-            if (allProcesses.Count > 1)
-            {
-                readyProcesses.Enqueue(allProcesses.Dequeue()); // second process ready to be execute
-                readyProcesses.Enqueue(allProcesses.Dequeue()); // third process ready to be execute
-                SetReadyProcesses(readyProcesses);
-            }
-            
-            llbPendingBatches.Text = allProcesses.Count.ToString(); */
+            actualProcess.t_llegada = 0;
+            ++counterProcesses;
+            llbPendingBatches.Text = allProcesses.Count.ToString();
         }
 
         public void SetActualProcess(Process p)
@@ -199,19 +197,49 @@ namespace Programa1
             tiempo de retorno = tf - tllegada
             tiempo de respuesta = tiempo de llegada - tiempo actual
             */
-            foreach (Process p in ConcludedProcesses)
-            {
-                p.t_retorno = p.t_finalizacion - p.t_llegada;
-                p.t_servicio = p.executionTime;
-                p.t_espera = p.t_retorno - p.t_servicio;
-            }
-            frmShowTimes process = new frmShowTimes(ConcludedProcesses);
+            
             if(isEnded)
             {
+                foreach (Process p in ConcludedProcesses)
+                {
+                    p.t_retorno = p.t_finalizacion - p.t_llegada;
+                    p.t_servicio = p.executionTime;
+                    p.t_espera = p.t_retorno - p.t_servicio;
+                }
+                frmShowTimes process = new frmShowTimes(ConcludedProcesses);
                 this.Hide();
+                process.ShowDialog();
+            }
+            else
+            {
+                BCP.AddRange(ConcludedProcesses.ToList());
+                if (actualProcess != null)
+                {
+                    BCP.Add(actualProcess);
+                }
+                BCP.AddRange(readyProcesses.ToList());
+                BCP.AddRange(lockedProcesses.ToList());
+                BCP.AddRange(allProcesses.ToList());
+
+                foreach (Process p in BCP)
+                {
+                    if (p.isFinished)
+                    {
+                        p.t_servicio = p.executionTime;
+                        p.t_retorno = p.t_finalizacion - p.t_llegada;
+                        p.t_espera = p.t_retorno - p.t_servicio;
+                    } else if(p.t_llegada != -1)
+                    {
+                        p.t_servicio = p.executionTime;
+                        p.t_espera = (counter - p.t_llegada) - p.t_servicio;
+                    }
+                }
+
+                frmShowTimes processes = new frmShowTimes(BCP);
+                processes.ShowDialog();
             }
             
-            process.ShowDialog();
+            
         }
 
         private void SetLockedProcesses()
@@ -322,7 +350,7 @@ namespace Programa1
                 case (int)Keys.N:
                     if (isPaused == false)
                     {
-                        Process newProcess = new Process("sdafwe", "1+1", '+', "2", 10, ++sumProcesses);
+                        Process newProcess = new Process(++sumProcesses);
                         allProcesses.Enqueue(newProcess);
                         llbPendingBatches.Text = allProcesses.Count.ToString();
                     }
@@ -335,7 +363,7 @@ namespace Programa1
                         timer.Stop();
                         isPaused = true;
                         CalculateTimes();
-                        MessageBox.Show("lala", "no se", MessageBoxButtons.OK);
+                        BCP.Clear();
                         timer.Start();
                         isPaused = false;
                     }

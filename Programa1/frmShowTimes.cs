@@ -54,7 +54,15 @@ namespace Programa1
 
             foreach (Process p in pro)
             {
-                myDataTable.Rows.Add(p.id, p.t_llegada, p.t_finalizacion, p.t_retorno, p.t_respuesta, p.t_espera, p.t_servicio);
+                myDataTable.Rows.Add(
+                                     p.id, 
+                                     p.t_llegada != -1 ? p.t_llegada.ToString() : "",
+                                     p.t_finalizacion != -1 ? p.t_finalizacion.ToString() : "", 
+                                     p.t_retorno != -1 ? p.t_retorno.ToString() : "",
+                                     p.t_respuesta != -1 ? p.t_respuesta.ToString() : "",
+                                     p.t_espera != -1 ? p.t_espera.ToString() : "",
+                                     p.t_servicio != -1 ? p.t_servicio.ToString() : ""
+                                     );
             }
 
             dgvProcessesTimes.DataSource = myDataTable;

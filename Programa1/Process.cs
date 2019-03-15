@@ -18,14 +18,23 @@ namespace Programa1
         public string result = "";
         public int noBatch = 0;
         public int locked = 0;
+        public bool isFinished = false;
         // new times
-        public int t_llegada = 0;
+        public int t_llegada = -1;
+        public int t_finalizacion = -1;
+        public int t_retorno = -1;
+        public int t_respuesta = -1;
+        public int t_espera = -1;
+        public int t_servicio = -1;
+        public int leftTimeAux = -1;
+
+        /*public int t_llegada = 0;
         public int t_finalizacion = 0;
         public int t_retorno = 0;
         public int t_respuesta = -1;
         public int t_espera = 0;
         public int t_servicio = 0;
-        public int leftTimeAux = 0;
+        public int leftTimeAux = 0;*/
 
 
         public Process(string nameDeveloper, string operation, char myOperator, string result, int maxTime, int idProcess)
@@ -75,6 +84,44 @@ namespace Programa1
                     break;
             }
             return myOperator;
+        }
+
+        public Process(int idProcess)
+        {
+            this.nameDeveloper = Process.RandomString(5);
+            int number1 = Process.GetRandomNumber(100, 1);
+            int number2 = Process.GetRandomNumber(100, 1);
+            this.maxTime = Process.GetRandomNumber(18, 7);
+            this.leftTime = maxTime;
+            this.id = idProcess;
+            this.result = "";
+            this.myOperator = Process.GetRandomOperator();
+            this.operation = number1.ToString() + myOperator + number2.ToString();
+
+            switch (myOperator)
+            {
+                case '+':
+                    result = (number1 + number2).ToString();
+                    break;
+                case '-':
+                    result = (number1 - number2).ToString();
+                    break;
+                case '*':
+                    result = (number1 * number2).ToString();
+                    break;
+
+                case '/':
+                    result = (number1 / number2).ToString();
+                    break;
+
+                case '%':
+                    result = (number1 % number2).ToString();
+                    break;
+
+                default:
+                    result = "";
+                    break;
+            }
         }
     }
 }
