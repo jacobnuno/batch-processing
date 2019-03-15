@@ -47,6 +47,8 @@ namespace Programa1
             myDataTable.Columns.Add("TRes");
             myDataTable.Columns.Add("TE");
             myDataTable.Columns.Add("TS");
+            myDataTable.Columns.Add("TRestante");
+            myDataTable.Columns.Add("TME");
 
             //myDataTable.Columns.Add("Tleft");
             //myDataTable.Columns.Add("TME");
@@ -61,7 +63,9 @@ namespace Programa1
                                      p.t_retorno != -1 ? p.t_retorno.ToString() : "",
                                      p.t_respuesta != -1 ? p.t_respuesta.ToString() : "",
                                      p.t_espera != -1 ? p.t_espera.ToString() : "",
-                                     p.t_servicio != -1 ? p.t_servicio.ToString() : ""
+                                     p.t_servicio != -1 ? p.t_servicio.ToString() : "",
+                                     p.leftTimeAux != -1 ? p.leftTimeAux.ToString() : "",
+                                     p.maxTime
                                      );
             }
 
