@@ -41,13 +41,14 @@ namespace Programa1
         {
             DataTable myDataTable = new DataTable();
             myDataTable.Columns.Add("ID");
-            myDataTable.Columns.Add("TL");
-            myDataTable.Columns.Add("TF");
-            myDataTable.Columns.Add("TRet");
-            myDataTable.Columns.Add("TRes");
-            myDataTable.Columns.Add("TE");
-            myDataTable.Columns.Add("TS");
-            myDataTable.Columns.Add("TRestante");
+            myDataTable.Columns.Add("Llegada");
+            myDataTable.Columns.Add("Final");
+            myDataTable.Columns.Add("Retorno");
+            myDataTable.Columns.Add("Respuesta");
+            myDataTable.Columns.Add("Espera");
+            myDataTable.Columns.Add("Servicio");
+            myDataTable.Columns.Add("Restante");
+            myDataTable.Columns.Add("Bloqueado");
             myDataTable.Columns.Add("TME");
 
             //myDataTable.Columns.Add("Tleft");
@@ -65,6 +66,7 @@ namespace Programa1
                                      p.t_espera != -1 ? p.t_espera.ToString() : "",
                                      p.t_servicio != -1 ? p.t_servicio.ToString() : "",
                                      p.leftTimeAux != -1 ? p.leftTimeAux.ToString() : "",
+                                     p.leftTimeAux != 0 ? p.locked.ToString() : "",
                                      p.maxTime
                                      );
             }

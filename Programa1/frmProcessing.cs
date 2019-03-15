@@ -78,6 +78,7 @@ namespace Programa1
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
+                --counterProcesses;
                 Process newProcess = allProcesses.Dequeue();
                 ++counterProcesses;
                 newProcess.t_llegada = counter;
@@ -99,6 +100,7 @@ namespace Programa1
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
+                --counterProcesses;
                 SetConcludedProcesses(ConcludedProcesses);
                 actualProcess = readyProcesses.Dequeue();
                 SetActualProcess(actualProcess);
@@ -118,6 +120,7 @@ namespace Programa1
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
+                --counterProcesses;
                 SetConcludedProcesses(ConcludedProcesses);
                 llbPendingBatches.Text = "0";
                 timer.Stop();
@@ -172,7 +175,6 @@ namespace Programa1
 
         private void SetConcludedProcesses(List<Process> pro)
         {
-            --counterProcesses;
             DataTable myDataTable = new DataTable();
             myDataTable.Columns.Add("ID");
             myDataTable.Columns.Add("Operación");
