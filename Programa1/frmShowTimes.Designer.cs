@@ -43,6 +43,7 @@
             this.dgvProcessesTimes.RowTemplate.Height = 24;
             this.dgvProcessesTimes.Size = new System.Drawing.Size(1381, 329);
             this.dgvProcessesTimes.TabIndex = 2;
+            this.dgvProcessesTimes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvProcessesTimes_KeyDown);
             // 
             // frmShowTimes
             // 

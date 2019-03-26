@@ -51,6 +51,10 @@
             this.label10 = new System.Windows.Forms.Label();
             this.dgvLockedProcesses = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblQuantum = new System.Windows.Forms.Label();
+            this.lblActualQuantum = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConcluded)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBatchExecuting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLockedProcesses)).BeginInit();
@@ -261,11 +265,51 @@
             this.label4.TabIndex = 22;
             this.label4.Text = "Cola de procesos bloqueados";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(492, 47);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(107, 17);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "Valor Quantum:";
+            // 
+            // lblQuantum
+            // 
+            this.lblQuantum.AutoSize = true;
+            this.lblQuantum.Location = new System.Drawing.Point(622, 47);
+            this.lblQuantum.Name = "lblQuantum";
+            this.lblQuantum.Size = new System.Drawing.Size(30, 17);
+            this.lblQuantum.TabIndex = 23;
+            this.lblQuantum.Text = "null";
+            // 
+            // lblActualQuantum
+            // 
+            this.lblActualQuantum.AutoSize = true;
+            this.lblActualQuantum.Location = new System.Drawing.Point(731, 402);
+            this.lblActualQuantum.Name = "lblActualQuantum";
+            this.lblActualQuantum.Size = new System.Drawing.Size(30, 17);
+            this.lblActualQuantum.TabIndex = 26;
+            this.lblActualQuantum.Text = "null";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(492, 402);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(113, 17);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "Quantum Actual:";
+            // 
             // frmProcessing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 700);
+            this.Controls.Add(this.lblActualQuantum);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.lblQuantum);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dgvLockedProcesses);
             this.Controls.Add(this.label10);
@@ -322,5 +366,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DataGridView dgvLockedProcesses;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblQuantum;
+        private System.Windows.Forms.Label lblActualQuantum;
+        private System.Windows.Forms.Label label13;
     }
 }

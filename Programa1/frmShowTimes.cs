@@ -74,5 +74,18 @@ namespace Programa1
             dgvProcessesTimes.DataSource = myDataTable;
             DataGridViewAutoSize(dgvProcessesTimes);
         }
+
+        private void dgvProcessesTimes_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyValue)
+            {
+                case (int)Keys.C:
+                    this.Close();
+                    break;             
+
+                default:
+                    break;
+            }
+        }
     }
 }

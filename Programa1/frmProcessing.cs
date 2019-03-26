@@ -37,6 +37,7 @@ namespace Programa1
             InitializeComponent();
             timer.Start();
             StarProcessing();
+            lblQuantum.Text = Quantum.ToString();
             this.Focus();
         }
 
@@ -79,10 +80,17 @@ namespace Programa1
                 lblLeftTime.Text = (--actualProcess.leftTime).ToString();
                 actualProcess.leftTimeAux = actualProcess.leftTime;
                 lblExecutionTime.Text = (++actualProcess.executionTime).ToString();
-                if (++actualProcess.executionQuantum == quantum)
+                ++actualProcess.executionQuantum;
+                lblActualQuantum.Text = actualProcess.executionQuantum.ToString();
+
+                if (actualProcess.executionQuantum == quantum)
                 {
-                    readyProcesses.Enqueue(actualProcess);
-                    actualProcess = null;
+                    if (actualProcess.leftTime > 0)
+                    {
+                        readyProcesses.Enqueue(actualProcess);
+                        actualProcess = null;
+                    }
+                        
                     //Process();
                 }
             }
@@ -389,5 +397,6 @@ namespace Programa1
                     break;
             }
         }
+
     }
 }
