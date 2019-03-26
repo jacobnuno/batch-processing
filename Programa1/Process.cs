@@ -27,6 +27,7 @@ namespace Programa1
         public int t_espera = -1;
         public int t_servicio = -1;
         public int leftTimeAux = -1;
+        public int executionQuantum = 0;
 
         /*public int t_llegada = 0;
         public int t_finalizacion = 0;

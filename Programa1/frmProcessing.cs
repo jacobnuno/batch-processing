@@ -19,6 +19,7 @@ namespace Programa1
         List<Process> BCP = new List<Process>();
         Process actualProcess;
         int counter = 0;
+        int quantum = 0;
         bool isPaused = false;
         int counterProcesses = 0;
         int sumProcesses = 0;
@@ -28,9 +29,10 @@ namespace Programa1
         int processess_blocked = 0;
         int processess_blocked = 0;*/
 
-        public frmProcessing(Queue<Process> Processes)
+        public frmProcessing(Queue<Process> Processes, int Quantum)
         {
             this.allProcesses = Processes;
+            this.quantum = Quantum;
             this.sumProcesses = Processes.Count;
             InitializeComponent();
             timer.Start();
@@ -40,7 +42,12 @@ namespace Programa1
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            while(counterProcesses < MAX_Processes && allProcesses.Count > 0)
+            Process();
+        }
+
+        public void Process()
+        {
+            while (counterProcesses < MAX_Processes && allProcesses.Count > 0)
             {
                 Process newProcess = allProcesses.Dequeue();
                 newProcess.t_llegada = counter;
@@ -72,6 +79,12 @@ namespace Programa1
                 lblLeftTime.Text = (--actualProcess.leftTime).ToString();
                 actualProcess.leftTimeAux = actualProcess.leftTime;
                 lblExecutionTime.Text = (++actualProcess.executionTime).ToString();
+                if (++actualProcess.executionQuantum == quantum)
+                {
+                    readyProcesses.Enqueue(actualProcess);
+                    actualProcess = null;
+                    //Process();
+                }
             }
             else if (allProcesses.Count > 0)
             {
@@ -142,6 +155,7 @@ namespace Programa1
         {
             if(p != null)
             {
+                p.executionQuantum = 0;
                 lblProcessId.Text = p.id.ToString();
                 lblOperator.Text = p.operation;
                 lblMaxTime.Text = p.maxTime.ToString();

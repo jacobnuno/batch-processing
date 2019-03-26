@@ -13,6 +13,7 @@ namespace Programa1
     public partial class Form1 : Form
     {
         int totalProcesses = 0;
+        int quantum = 0;
         int ids = 0;
         Queue<Process> Processess = new Queue<Process>();
 
@@ -24,11 +25,18 @@ namespace Programa1
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             int processNumber = Convert.ToInt32(inputProcess.Value);
+            this.quantum = Convert.ToInt32(inputQuantum.Value);
             if (processNumber <= 0)
             {
                 MessageBox.Show("Número de Procesos Inválido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (this.quantum <= 0)
+            {
+                MessageBox.Show("Número de Quantum Inválido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             totalProcesses = processNumber;
             AddProcessess();
         }
@@ -143,7 +151,7 @@ namespace Programa1
                     process.ShowDialog();
                 } */
             }
-            frmProcessing process = new frmProcessing(Processess);
+            frmProcessing process = new frmProcessing(Processess, this.quantum);
             this.Hide();
             process.ShowDialog();
         }

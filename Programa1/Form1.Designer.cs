@@ -31,12 +31,15 @@
             this.inputProcess = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAceptar = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.inputQuantum = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.inputProcess)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputQuantum)).BeginInit();
             this.SuspendLayout();
             // 
             // inputProcess
             // 
-            this.inputProcess.Location = new System.Drawing.Point(48, 112);
+            this.inputProcess.Location = new System.Drawing.Point(28, 59);
             this.inputProcess.Margin = new System.Windows.Forms.Padding(4);
             this.inputProcess.Name = "inputProcess";
             this.inputProcess.Size = new System.Drawing.Size(167, 22);
@@ -50,7 +53,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(98, 49);
+            this.label1.Location = new System.Drawing.Point(25, 19);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(221, 17);
@@ -59,7 +62,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(270, 106);
+            this.btnAceptar.Location = new System.Drawing.Point(311, 184);
             this.btnAceptar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(121, 33);
@@ -68,11 +71,36 @@
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(25, 108);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(202, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Introduce el valor del Quantum";
+            // 
+            // inputQuantum
+            // 
+            this.inputQuantum.Location = new System.Drawing.Point(28, 147);
+            this.inputQuantum.Margin = new System.Windows.Forms.Padding(4);
+            this.inputQuantum.Name = "inputQuantum";
+            this.inputQuantum.Size = new System.Drawing.Size(167, 22);
+            this.inputQuantum.TabIndex = 4;
+            this.inputQuantum.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 207);
+            this.ClientSize = new System.Drawing.Size(482, 230);
+            this.Controls.Add(this.inputQuantum);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.inputProcess);
@@ -80,6 +108,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.inputProcess)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputQuantum)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -90,6 +119,8 @@
         private System.Windows.Forms.NumericUpDown inputProcess;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown inputQuantum;
     }
 }
 
