@@ -25,9 +25,6 @@ namespace Programa1
         int sumProcesses = 0;
         const int MAX_Processes = 3;
         bool isEnded = false;
-        /*int processess_blocked = 0;
-        int processess_blocked = 0;
-        int processess_blocked = 0;*/
 
         public frmProcessing(Queue<Process> Processes, int Quantum)
         {
@@ -155,6 +152,7 @@ namespace Programa1
             actualProcess = allProcesses.Dequeue();
             SetActualProcess(actualProcess);
             actualProcess.t_llegada = 0;
+            actualProcess.t_respuesta = 0;
             ++counterProcesses;
             llbPendingBatches.Text = allProcesses.Count.ToString();
         }
@@ -247,6 +245,7 @@ namespace Programa1
 
                 foreach (Process p in BCP)
                 {
+                    p.locked = p.locked == 10 ? 0 : p.locked;
                     if (p.isFinished)
                     {
                         p.t_servicio = p.executionTime;
