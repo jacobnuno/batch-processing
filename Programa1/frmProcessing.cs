@@ -42,6 +42,7 @@ namespace Programa1
             this.Focus();
             memory = new Memory(36, frameSize);
             memory.addProcess(new Process("SO", "", 'X', "", 0, -1, 10));
+            memory.changeStatus(-1, -1);
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -60,8 +61,8 @@ namespace Programa1
                 ++counterProcesses;
                 SetReadyProcesses(readyProcesses);
                 llbPendingBatches.Text = allProcesses.Count.ToString();
+                ShowMemory();
             }
-
             if (actualProcess == null)
             {
                 lblCounter.Text = (++counter).ToString();
@@ -316,6 +317,53 @@ namespace Programa1
                 grd.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                 //set width to calculated by autosize
                 grd.Columns[i].Width = colw;
+            }
+        }
+
+        public void ShowMemory()
+        {
+            dgvMemory.Columns.Clear();
+            dgvMemory.Rows.Clear();
+            dgvMemory.Columns.Add("ID", "ID");
+            dgvMemory.Columns.Add("Process", "Process");
+            for (int i = 0; i < frameSize; i++)
+            {
+                dgvMemory.Columns.Add(i.ToString(), i.ToString());
+            }
+
+            for(int i = 0; i < 36; i++)
+            {
+                if(memory.Frames[i].Status == 0)
+                {
+                    dgvMemory.Rows.Add(memory.Frames[i].ID.ToString());
+                }
+                else
+                {
+                    dgvMemory.Rows.Add(memory.Frames[i].ID.ToString(), memory.Frames[i].Process.ToString());
+
+                    for(int j = 0; j < memory.Frames[i].Memory; j++)
+                    {
+                        Color RowColor = new Color();
+
+                        switch (memory.Frames[i].Status)
+                        {
+                            case -1:
+                                RowColor = Color.Black;
+                                break;
+                            case 1:
+                                RowColor = Color.Blue;
+                                break;
+                            case 2:
+                                RowColor = Color.Red;
+                                break;
+                            case 3:
+                                RowColor = Color.Purple;
+                                break;
+                        }
+
+                        dgvMemory.Rows[i].Cells[j + 2].Style.BackColor = RowColor;
+                    }
+                }
             }
         }
 

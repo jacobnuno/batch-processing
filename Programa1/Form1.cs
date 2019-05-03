@@ -87,6 +87,7 @@ namespace Programa1
                 int number1 = Process.GetRandomNumber(100, 1);
                 int number2 = Process.GetRandomNumber(100, 1);
                 int maxTime = Process.GetRandomNumber(18, 7);
+                int Size = Process.GetRandomNumber(30, 7);
                 int idProcess = ++ids;
                 string result = "";
                 char myOperator = Process.GetRandomOperator();
@@ -116,7 +117,7 @@ namespace Programa1
                         result = "";
                         break;
                 }
-                Process newProcess = new Process(nameDeveloper, operation, myOperator, result, maxTime, idProcess);
+                Process newProcess = new Process(nameDeveloper, operation, myOperator, result, maxTime, idProcess, Size);
                 Processess.Enqueue(newProcess);
                 /*cont++;
                 int i = 0;
