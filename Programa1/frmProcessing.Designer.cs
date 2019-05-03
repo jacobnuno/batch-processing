@@ -56,6 +56,10 @@
             this.lblActualQuantum = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.dgvMemory = new System.Windows.Forms.DataGridView();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lblNextProcess = new System.Windows.Forms.Label();
+            this.lblSizeProcess = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConcluded)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBatchExecuting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLockedProcesses)).BeginInit();
@@ -67,12 +71,11 @@
             this.dgvConcluded.AllowUserToAddRows = false;
             this.dgvConcluded.AllowUserToDeleteRows = false;
             this.dgvConcluded.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvConcluded.Location = new System.Drawing.Point(888, 216);
-            this.dgvConcluded.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dgvConcluded.Location = new System.Drawing.Point(951, 180);
             this.dgvConcluded.Name = "dgvConcluded";
             this.dgvConcluded.ReadOnly = true;
             this.dgvConcluded.RowTemplate.Height = 24;
-            this.dgvConcluded.Size = new System.Drawing.Size(578, 330);
+            this.dgvConcluded.Size = new System.Drawing.Size(514, 264);
             this.dgvConcluded.TabIndex = 0;
             this.dgvConcluded.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProcessing_KeyDown);
             // 
@@ -81,147 +84,146 @@
             this.dgvBatchExecuting.AllowUserToAddRows = false;
             this.dgvBatchExecuting.AllowUserToDeleteRows = false;
             this.dgvBatchExecuting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBatchExecuting.Location = new System.Drawing.Point(16, 216);
-            this.dgvBatchExecuting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dgvBatchExecuting.Location = new System.Drawing.Point(597, 512);
             this.dgvBatchExecuting.Name = "dgvBatchExecuting";
             this.dgvBatchExecuting.ReadOnly = true;
             this.dgvBatchExecuting.RowTemplate.Height = 24;
-            this.dgvBatchExecuting.Size = new System.Drawing.Size(498, 324);
+            this.dgvBatchExecuting.Size = new System.Drawing.Size(443, 259);
             this.dgvBatchExecuting.TabIndex = 1;
             this.dgvBatchExecuting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProcessing_KeyDown);
             // 
             // llbPending
             // 
             this.llbPending.AutoSize = true;
-            this.llbPending.Location = new System.Drawing.Point(40, 28);
+            this.llbPending.Location = new System.Drawing.Point(36, 22);
             this.llbPending.Name = "llbPending";
-            this.llbPending.Size = new System.Drawing.Size(134, 20);
+            this.llbPending.Size = new System.Drawing.Size(121, 17);
             this.llbPending.TabIndex = 2;
             this.llbPending.Text = "Procesos nuevos:";
             // 
             // llbPendingBatches
             // 
             this.llbPendingBatches.AutoSize = true;
-            this.llbPendingBatches.Location = new System.Drawing.Point(194, 28);
+            this.llbPendingBatches.Location = new System.Drawing.Point(172, 22);
             this.llbPendingBatches.Name = "llbPendingBatches";
-            this.llbPendingBatches.Size = new System.Drawing.Size(18, 20);
+            this.llbPendingBatches.Size = new System.Drawing.Size(16, 17);
             this.llbPendingBatches.TabIndex = 3;
             this.llbPendingBatches.Text = "0";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(194, 172);
+            this.label1.Location = new System.Drawing.Point(755, 477);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 20);
+            this.label1.Size = new System.Drawing.Size(92, 17);
             this.label1.TabIndex = 4;
             this.label1.Text = "Cola de listos";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1100, 172);
+            this.label2.Location = new System.Drawing.Point(1140, 145);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(162, 20);
+            this.label2.Size = new System.Drawing.Size(146, 17);
             this.label2.TabIndex = 5;
             this.label2.Text = "Procesos Terminados";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(624, 172);
+            this.label3.Location = new System.Drawing.Point(717, 145);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(162, 20);
+            this.label3.Size = new System.Drawing.Size(145, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "Proceso en Ejecución";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(554, 318);
+            this.label5.Location = new System.Drawing.Point(654, 261);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(86, 20);
+            this.label5.Size = new System.Drawing.Size(78, 17);
             this.label5.TabIndex = 9;
             this.label5.Text = "Operación:";
             // 
             // lblOperator
             // 
             this.lblOperator.AutoSize = true;
-            this.lblOperator.Location = new System.Drawing.Point(754, 318);
+            this.lblOperator.Location = new System.Drawing.Point(832, 261);
             this.lblOperator.Name = "lblOperator";
-            this.lblOperator.Size = new System.Drawing.Size(33, 20);
+            this.lblOperator.Size = new System.Drawing.Size(30, 17);
             this.lblOperator.TabIndex = 10;
             this.lblOperator.Text = "null";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(554, 360);
+            this.label6.Location = new System.Drawing.Point(654, 295);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(194, 20);
+            this.label6.Size = new System.Drawing.Size(172, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "Tiempo Máximo Estimado:";
             // 
             // lblMaxTime
             // 
             this.lblMaxTime.AutoSize = true;
-            this.lblMaxTime.Location = new System.Drawing.Point(754, 360);
+            this.lblMaxTime.Location = new System.Drawing.Point(832, 295);
             this.lblMaxTime.Name = "lblMaxTime";
-            this.lblMaxTime.Size = new System.Drawing.Size(33, 20);
+            this.lblMaxTime.Size = new System.Drawing.Size(30, 17);
             this.lblMaxTime.TabIndex = 12;
             this.lblMaxTime.Text = "null";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(554, 230);
+            this.label7.Location = new System.Drawing.Point(654, 191);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(127, 20);
+            this.label7.Size = new System.Drawing.Size(113, 17);
             this.label7.TabIndex = 13;
             this.label7.Text = "ID del programa:";
             // 
             // lblProcessId
             // 
             this.lblProcessId.AutoSize = true;
-            this.lblProcessId.Location = new System.Drawing.Point(754, 230);
+            this.lblProcessId.Location = new System.Drawing.Point(832, 191);
             this.lblProcessId.Name = "lblProcessId";
-            this.lblProcessId.Size = new System.Drawing.Size(33, 20);
+            this.lblProcessId.Size = new System.Drawing.Size(30, 17);
             this.lblProcessId.TabIndex = 14;
             this.lblProcessId.Text = "null";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(554, 424);
+            this.label8.Location = new System.Drawing.Point(654, 346);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(246, 20);
+            this.label8.Size = new System.Drawing.Size(223, 17);
             this.label8.TabIndex = 15;
             this.label8.Text = "Tiempo transcurrido en ejecución:";
             // 
             // lblExecutionTime
             // 
             this.lblExecutionTime.AutoSize = true;
-            this.lblExecutionTime.Location = new System.Drawing.Point(822, 424);
+            this.lblExecutionTime.Location = new System.Drawing.Point(893, 346);
             this.lblExecutionTime.Name = "lblExecutionTime";
-            this.lblExecutionTime.Size = new System.Drawing.Size(33, 20);
+            this.lblExecutionTime.Size = new System.Drawing.Size(30, 17);
             this.lblExecutionTime.TabIndex = 16;
             this.lblExecutionTime.Text = "null";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(554, 460);
+            this.label9.Location = new System.Drawing.Point(654, 375);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(216, 20);
+            this.label9.Size = new System.Drawing.Size(195, 17);
             this.label9.TabIndex = 17;
             this.label9.Text = "Tiempo restante por ejecutar:";
             // 
             // lblLeftTime
             // 
             this.lblLeftTime.AutoSize = true;
-            this.lblLeftTime.Location = new System.Drawing.Point(822, 460);
+            this.lblLeftTime.Location = new System.Drawing.Point(893, 375);
             this.lblLeftTime.Name = "lblLeftTime";
-            this.lblLeftTime.Size = new System.Drawing.Size(33, 20);
+            this.lblLeftTime.Size = new System.Drawing.Size(30, 17);
             this.lblLeftTime.TabIndex = 18;
             this.lblLeftTime.Text = "null";
             // 
@@ -233,18 +235,18 @@
             // lblCounter
             // 
             this.lblCounter.AutoSize = true;
-            this.lblCounter.Location = new System.Drawing.Point(1010, 59);
+            this.lblCounter.Location = new System.Drawing.Point(1060, 54);
             this.lblCounter.Name = "lblCounter";
-            this.lblCounter.Size = new System.Drawing.Size(33, 20);
+            this.lblCounter.Size = new System.Drawing.Size(30, 17);
             this.lblCounter.TabIndex = 19;
             this.lblCounter.Text = "null";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(902, 59);
+            this.label10.Location = new System.Drawing.Point(964, 54);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 20);
+            this.label10.Size = new System.Drawing.Size(59, 17);
             this.label10.TabIndex = 20;
             this.label10.Text = "Tiempo:";
             // 
@@ -253,56 +255,55 @@
             this.dgvLockedProcesses.AllowUserToAddRows = false;
             this.dgvLockedProcesses.AllowUserToDeleteRows = false;
             this.dgvLockedProcesses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvLockedProcesses.Location = new System.Drawing.Point(576, 602);
-            this.dgvLockedProcesses.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dgvLockedProcesses.Location = new System.Drawing.Point(1143, 498);
             this.dgvLockedProcesses.Name = "dgvLockedProcesses";
             this.dgvLockedProcesses.ReadOnly = true;
             this.dgvLockedProcesses.RowTemplate.Height = 24;
-            this.dgvLockedProcesses.Size = new System.Drawing.Size(433, 260);
+            this.dgvLockedProcesses.Size = new System.Drawing.Size(385, 208);
             this.dgvLockedProcesses.TabIndex = 21;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(606, 560);
+            this.label4.Location = new System.Drawing.Point(1107, 478);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(219, 20);
+            this.label4.Size = new System.Drawing.Size(196, 17);
             this.label4.TabIndex = 22;
             this.label4.Text = "Cola de procesos bloqueados";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(554, 59);
+            this.label11.Location = new System.Drawing.Point(654, 54);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(120, 20);
+            this.label11.Size = new System.Drawing.Size(107, 17);
             this.label11.TabIndex = 24;
             this.label11.Text = "Valor Quantum:";
             // 
             // lblQuantum
             // 
             this.lblQuantum.AutoSize = true;
-            this.lblQuantum.Location = new System.Drawing.Point(700, 59);
+            this.lblQuantum.Location = new System.Drawing.Point(784, 54);
             this.lblQuantum.Name = "lblQuantum";
-            this.lblQuantum.Size = new System.Drawing.Size(33, 20);
+            this.lblQuantum.Size = new System.Drawing.Size(30, 17);
             this.lblQuantum.TabIndex = 23;
             this.lblQuantum.Text = "null";
             // 
             // lblActualQuantum
             // 
             this.lblActualQuantum.AutoSize = true;
-            this.lblActualQuantum.Location = new System.Drawing.Point(822, 502);
+            this.lblActualQuantum.Location = new System.Drawing.Point(893, 409);
             this.lblActualQuantum.Name = "lblActualQuantum";
-            this.lblActualQuantum.Size = new System.Drawing.Size(33, 20);
+            this.lblActualQuantum.Size = new System.Drawing.Size(30, 17);
             this.lblActualQuantum.TabIndex = 26;
             this.lblActualQuantum.Text = "null";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(554, 502);
+            this.label13.Location = new System.Drawing.Point(654, 409);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(128, 20);
+            this.label13.Size = new System.Drawing.Size(113, 17);
             this.label13.TabIndex = 25;
             this.label13.Text = "Quantum Actual:";
             // 
@@ -312,19 +313,59 @@
             this.dgvMemory.AllowUserToDeleteRows = false;
             this.dgvMemory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvMemory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMemory.Location = new System.Drawing.Point(16, 548);
-            this.dgvMemory.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dgvMemory.Location = new System.Drawing.Point(14, 110);
             this.dgvMemory.Name = "dgvMemory";
             this.dgvMemory.ReadOnly = true;
             this.dgvMemory.RowTemplate.Height = 24;
-            this.dgvMemory.Size = new System.Drawing.Size(498, 324);
+            this.dgvMemory.Size = new System.Drawing.Size(533, 661);
             this.dgvMemory.TabIndex = 27;
+            this.dgvMemory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProcessing_KeyDown);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(36, 75);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(135, 17);
+            this.label12.TabIndex = 28;
+            this.label12.Text = "ID Proximo Proceso:";
+            // 
+            // lblNextProcess
+            // 
+            this.lblNextProcess.AutoSize = true;
+            this.lblNextProcess.Location = new System.Drawing.Point(193, 75);
+            this.lblNextProcess.Name = "lblNextProcess";
+            this.lblNextProcess.Size = new System.Drawing.Size(16, 17);
+            this.lblNextProcess.TabIndex = 29;
+            this.lblNextProcess.Text = "0";
+            // 
+            // lblSizeProcess
+            // 
+            this.lblSizeProcess.AutoSize = true;
+            this.lblSizeProcess.Location = new System.Drawing.Point(441, 75);
+            this.lblSizeProcess.Name = "lblSizeProcess";
+            this.lblSizeProcess.Size = new System.Drawing.Size(16, 17);
+            this.lblSizeProcess.TabIndex = 30;
+            this.lblSizeProcess.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(235, 75);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(174, 17);
+            this.label16.TabIndex = 31;
+            this.label16.Text = "Tamaño Proximo Proceso:";
             // 
             // frmProcessing
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1490, 875);
+            this.ClientSize = new System.Drawing.Size(1508, 793);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.lblSizeProcess);
+            this.Controls.Add(this.lblNextProcess);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.dgvMemory);
             this.Controls.Add(this.lblActualQuantum);
             this.Controls.Add(this.label13);
@@ -351,7 +392,6 @@
             this.Controls.Add(this.llbPending);
             this.Controls.Add(this.dgvBatchExecuting);
             this.Controls.Add(this.dgvConcluded);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmProcessing";
             this.Text = "frmProcessing";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProcessing_KeyDown);
@@ -393,5 +433,9 @@
         private System.Windows.Forms.Label lblActualQuantum;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.DataGridView dgvMemory;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblNextProcess;
+        private System.Windows.Forms.Label lblSizeProcess;
+        private System.Windows.Forms.Label label16;
     }
 }

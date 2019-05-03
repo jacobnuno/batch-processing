@@ -37,12 +37,12 @@ namespace Programa1
             this.sumProcesses = Processes.Count;
             InitializeComponent();
             timer.Start();
-            StarProcessing();
-            lblQuantum.Text = Quantum.ToString();
-            this.Focus();
             memory = new Memory(36, frameSize);
             memory.addProcess(new Process("SO", "", 'X', "", 0, -1, 10));
             memory.changeStatus(-1, -1);
+            StarProcessing();
+            lblQuantum.Text = Quantum.ToString();
+            this.Focus();
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -52,6 +52,17 @@ namespace Programa1
 
         public void Process()
         {
+            // next process to be executed
+            if (allProcesses.Count > 0)
+            {
+                lblNextProcess.Text = allProcesses.First().id.ToString();
+                lblSizeProcess.Text = allProcesses.First().Size.ToString();
+            }
+            else
+            {
+                lblNextProcess.Text = "";
+                lblSizeProcess.Text = "";
+            }
             while (allProcesses.Count > 0 && memory.canAccess(allProcesses.First().Size / (double)frameSize))
             {
                 Process newProcess = allProcesses.Dequeue();
@@ -93,10 +104,11 @@ namespace Programa1
                     if (actualProcess.leftTime > 0)
                     {
                         readyProcesses.Enqueue(actualProcess);
+                        memory.changeStatus(actualProcess.id, 1);
+                        ShowMemory();
                         actualProcess = null;
                     }
                         
-                    //Process();
                 }
             }
             else if (allProcesses.Count > 0)
@@ -104,11 +116,15 @@ namespace Programa1
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
+                memory.removeProcess(actualProcess.id);
+                ShowMemory();
                 --counterProcesses;
                 Process newProcess = allProcesses.Dequeue();
                 ++counterProcesses;
                 newProcess.t_llegada = counter;
                 readyProcesses.Enqueue(newProcess);
+                ShowMemory();
+                memory.addProcess(newProcess);
                 llbPendingBatches.Text = allProcesses.Count.ToString();
                 actualProcess = readyProcesses.Dequeue();
                 SetReadyProcesses(readyProcesses);
@@ -126,6 +142,8 @@ namespace Programa1
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
+                memory.removeProcess(actualProcess.id);
+                ShowMemory();
                 --counterProcesses;
                 SetConcludedProcesses(ConcludedProcesses);
                 actualProcess = readyProcesses.Dequeue();
@@ -146,6 +164,8 @@ namespace Programa1
                 actualProcess.t_finalizacion = counter; // add t_fin to actual process
                 actualProcess.isFinished = true;
                 ConcludedProcesses.Add(actualProcess);
+                memory.removeProcess(actualProcess.id);
+                ShowMemory();
                 --counterProcesses;
                 SetConcludedProcesses(ConcludedProcesses);
                 llbPendingBatches.Text = "0";
@@ -159,6 +179,9 @@ namespace Programa1
         {
             actualProcess = allProcesses.Dequeue();
             SetActualProcess(actualProcess);
+            memory.addProcess(actualProcess);
+            memory.changeStatus(actualProcess.id, 2);
+            ShowMemory();
             actualProcess.t_llegada = 0;
             actualProcess.t_respuesta = 0;
             ++counterProcesses;
@@ -174,6 +197,8 @@ namespace Programa1
                 lblOperator.Text = p.operation;
                 lblMaxTime.Text = p.maxTime.ToString();
                 lblExecutionTime.Text = p.executionTime.ToString();
+                memory.changeStatus(p.id, 2);
+                ShowMemory();
             } else
             {
                 lblProcessId.Text = "null";
@@ -287,7 +312,10 @@ namespace Programa1
                 }
                 if(lockedProcesses.First().locked == 10)
                 {
-                    readyProcesses.Enqueue(lockedProcesses.Dequeue());
+                    Process toReadyQueue = lockedProcesses.Dequeue();
+                    memory.changeStatus(toReadyQueue.id, 1);
+                    readyProcesses.Enqueue(toReadyQueue);
+                    ShowMemory();
                     SetReadyProcesses(readyProcesses);
                 }
             }
@@ -324,8 +352,8 @@ namespace Programa1
         {
             dgvMemory.Columns.Clear();
             dgvMemory.Rows.Clear();
-            dgvMemory.Columns.Add("ID", "ID");
-            dgvMemory.Columns.Add("Process", "Process");
+            dgvMemory.Columns.Add("MARCO", "MARCO");
+            dgvMemory.Columns.Add("ID Process", "ID Process");
             for (int i = 0; i < frameSize; i++)
             {
                 dgvMemory.Columns.Add(i.ToString(), i.ToString());
@@ -379,6 +407,7 @@ namespace Programa1
                             actualProcess.locked = 0;
                             lockedProcesses.Enqueue(actualProcess);
                             memory.changeStatus(actualProcess.id, 3);
+                            ShowMemory();
                             SetLockedProcesses();
                             if(readyProcesses.Count > 0)
                             {
@@ -410,6 +439,7 @@ namespace Programa1
                     } 
                     break;
 
+                case (int)Keys.M:
                 case (int)Keys.P:
                     if(isPaused == false)
                     {
@@ -432,6 +462,9 @@ namespace Programa1
                         Process newProcess = new Process(++sumProcesses);
                         allProcesses.Enqueue(newProcess);
                         llbPendingBatches.Text = allProcesses.Count.ToString();
+                        // next process to be executed
+                        lblNextProcess.Text = allProcesses.First().id.ToString();
+                        lblSizeProcess.Text = allProcesses.First().Size.ToString();
                     }
                     break;
 
@@ -452,6 +485,6 @@ namespace Programa1
                     break;
             }
         }
-
+        
     }
 }
