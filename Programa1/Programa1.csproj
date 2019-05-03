@@ -53,6 +53,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frame.cs" />
     <Compile Include="frmAddProcesses.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +66,7 @@
     <Compile Include="frmProcessing.Designer.cs">
       <DependentUpon>frmProcessing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Memory.cs" />
     <Compile Include="Process.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

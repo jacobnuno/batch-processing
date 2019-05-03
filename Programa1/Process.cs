@@ -28,6 +28,7 @@ namespace Programa1
         public int t_servicio = -1;
         public int leftTimeAux = -1;
         public int executionQuantum = 0;
+        public int Size;
 
         /*public int t_llegada = 0;
         public int t_finalizacion = 0;
@@ -38,7 +39,7 @@ namespace Programa1
         public int leftTimeAux = 0;*/
 
 
-        public Process(string nameDeveloper, string operation, char myOperator, string result, int maxTime, int idProcess)
+        public Process(string nameDeveloper, string operation, char myOperator, string result, int maxTime, int idProcess, int Size)
         {
             this.id = idProcess;
             this.maxTime = maxTime;
@@ -47,6 +48,7 @@ namespace Programa1
             this.operation = operation;
             this.myOperator = myOperator;
             this.result = result;
+            this.Size = Size;
         }
 
         private static Random random = new Random();
@@ -93,6 +95,7 @@ namespace Programa1
             int number1 = Process.GetRandomNumber(100, 1);
             int number2 = Process.GetRandomNumber(100, 1);
             this.maxTime = Process.GetRandomNumber(18, 7);
+            this.Size = Process.GetRandomNumber(30, 7);
             this.leftTime = maxTime;
             this.id = idProcess;
             this.result = "";

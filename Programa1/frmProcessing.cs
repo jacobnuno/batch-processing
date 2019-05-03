@@ -18,6 +18,10 @@ namespace Programa1
         List<Process> ConcludedProcesses = new List<Process>();
         List<Process> BCP = new List<Process>();
         Process actualProcess;
+
+        int frameSize = 5;
+        Memory memory;
+
         int counter = 0;
         int quantum = 0;
         bool isPaused = false;
@@ -36,6 +40,8 @@ namespace Programa1
             StarProcessing();
             lblQuantum.Text = Quantum.ToString();
             this.Focus();
+            memory = new Memory(36, frameSize);
+            memory.addProcess(new Process("SO", "", 'X', "", 0, -1, 10));
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -45,10 +51,11 @@ namespace Programa1
 
         public void Process()
         {
-            while (counterProcesses < MAX_Processes && allProcesses.Count > 0)
+            while (allProcesses.Count > 0 && memory.canAccess(allProcesses.First().Size / (double)frameSize))
             {
                 Process newProcess = allProcesses.Dequeue();
                 newProcess.t_llegada = counter;
+                memory.addProcess(newProcess);
                 readyProcesses.Enqueue(newProcess);
                 ++counterProcesses;
                 SetReadyProcesses(readyProcesses);
@@ -323,6 +330,7 @@ namespace Programa1
                         {
                             actualProcess.locked = 0;
                             lockedProcesses.Enqueue(actualProcess);
+                            memory.changeStatus(actualProcess.id, 3);
                             SetLockedProcesses();
                             if(readyProcesses.Count > 0)
                             {
