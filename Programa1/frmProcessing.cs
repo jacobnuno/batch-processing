@@ -408,13 +408,14 @@ namespace Programa1
 
             for (int i = 0; i < 18; i += 1)
             {
-                if (memory.Frames[i].Status == 0)
+                int aux = i * 2 + 1;
+                if (memory.Frames[aux].Status == 0)
                 {
-                    dgvMemory2.Rows.Add(memory.Frames[i * 2 + 1].ID.ToString());
+                    dgvMemory2.Rows.Add(memory.Frames[aux].ID.ToString());
                 }
                 else
                 {
-                    int aux = i * 2 + 1;
+                    
                     dgvMemory2.Rows.Add(memory.Frames[aux].ID.ToString(), memory.Frames[aux].Process.ToString());
 
                     for (int j = 0; j < memory.Frames[aux].Memory; j++)

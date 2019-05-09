@@ -373,6 +373,7 @@
             this.dgvMemory2.RowTemplate.Height = 24;
             this.dgvMemory2.Size = new System.Drawing.Size(488, 661);
             this.dgvMemory2.TabIndex = 32;
+            this.dgvMemory2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProcessing_KeyDown);
             // 
             // frmProcessing
             // 
