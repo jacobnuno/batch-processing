@@ -359,21 +359,23 @@ namespace Programa1
                 dgvMemory.Columns.Add(i.ToString(), i.ToString());
             }
 
-            for(int i = 0; i < 36; i++)
+            for(int i = 0; i < 18; i++)
             {
-                if(memory.Frames[i].Status == 0)
+                int aux = i * 2;
+
+                if(memory.Frames[aux].Status == 0)
                 {
-                    dgvMemory.Rows.Add(memory.Frames[i].ID.ToString());
+                    dgvMemory.Rows.Add(memory.Frames[aux].ID.ToString());
                 }
                 else
                 {
-                    dgvMemory.Rows.Add(memory.Frames[i].ID.ToString(), memory.Frames[i].Process.ToString());
+                    dgvMemory.Rows.Add(memory.Frames[aux].ID.ToString(), memory.Frames[aux].Process.ToString());
 
-                    for(int j = 0; j < memory.Frames[i].Memory; j++)
+                    for(int j = 0; j < memory.Frames[aux].Memory; j++)
                     {
                         Color RowColor = new Color();
 
-                        switch (memory.Frames[i].Status)
+                        switch (memory.Frames[aux].Status)
                         {
                             case -1:
                                 RowColor = Color.Black;
@@ -393,6 +395,52 @@ namespace Programa1
                     }
                 }
             }
+
+            // dgv 2.
+            dgvMemory2.Columns.Clear();
+            dgvMemory2.Rows.Clear();
+            dgvMemory2.Columns.Add("MARCO", "MARCO");
+            dgvMemory2.Columns.Add("ID Process", "ID Process");
+            for (int i = 0; i < frameSize; i++)
+            {
+                dgvMemory2.Columns.Add(i.ToString(), i.ToString());
+            }
+
+            for (int i = 0; i < 18; i += 1)
+            {
+                if (memory.Frames[i].Status == 0)
+                {
+                    dgvMemory2.Rows.Add(memory.Frames[i * 2 + 1].ID.ToString());
+                }
+                else
+                {
+                    int aux = i * 2 + 1;
+                    dgvMemory2.Rows.Add(memory.Frames[aux].ID.ToString(), memory.Frames[aux].Process.ToString());
+
+                    for (int j = 0; j < memory.Frames[aux].Memory; j++)
+                    {
+                        Color RowColor = new Color();
+
+                        switch (memory.Frames[aux].Status)
+                        {
+                            case -1:
+                                RowColor = Color.Black;
+                                break;
+                            case 1:
+                                RowColor = Color.Blue;
+                                break;
+                            case 2:
+                                RowColor = Color.Red;
+                                break;
+                            case 3:
+                                RowColor = Color.Purple;
+                                break;
+                        }
+
+                        dgvMemory2.Rows[i].Cells[j + 2].Style.BackColor = RowColor;
+                    }
+                }
+            } 
         }
 
         private void frmProcessing_KeyDown(object sender, KeyEventArgs e)
