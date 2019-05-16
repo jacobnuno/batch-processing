@@ -15,6 +15,7 @@ namespace Programa1
         Queue<Process> allProcesses = new Queue<Process>();
         Queue<Process> readyProcesses = new Queue<Process>();
         Queue<Process> lockedProcesses = new Queue<Process>();
+        Queue<Process> suspendedProcesses = new Queue<Process>();
         List<Process> ConcludedProcesses = new List<Process>();
         List<Process> BCP = new List<Process>();
         Process actualProcess;
@@ -156,6 +157,18 @@ namespace Programa1
             }
             else if (lockedProcesses.Count > 0)
             {
+                actualProcess = null;
+                SetActualProcess(actualProcess);
+            }
+            else if(suspendedProcesses.Count > 0)
+            {
+                actualProcess.t_finalizacion = counter; // add t_fin to actual process
+                actualProcess.isFinished = true;
+                ConcludedProcesses.Add(actualProcess);
+                memory.removeProcess(actualProcess.id);
+                ShowMemory();
+                --counterProcesses;
+                SetConcludedProcesses(ConcludedProcesses);
                 actualProcess = null;
                 SetActualProcess(actualProcess);
             }
@@ -529,11 +542,41 @@ namespace Programa1
                         isPaused = false;
                     }
                     break;
+                
+                case (int)Keys.S:
+                    if(isPaused == false && lockedProcesses.Count > 0)
+                    {
+                        Process P = lockedProcesses.Dequeue();
+                        memory.removeProcess(P.id);
+                        suspendedProcesses.Enqueue(P);
+                        showSuspended();
+                        ShowMemory();
+                    }
+                    break;
+
+                case (int)Keys.R:
+                    if (isPaused == false && suspendedProcesses.Count > 0 && memory.canAccess(suspendedProcesses.First().Size / (double)frameSize))
+                    {
+                        Process P = suspendedProcesses.Dequeue();
+                        memory.addProcess(P);
+                        memory.changeStatus(P.id, 3);
+                        lockedProcesses.Enqueue(P);
+                        showSuspended();
+                        ShowMemory();
+                    }
+                    break;
 
                 default:
                     break;
             }
         }
         
+        private void showSuspended()
+        {
+            lblSuspended.Text = suspendedProcesses.Count().ToString();
+
+            lblNextSuspended.Text = suspendedProcesses.Count > 0 ? suspendedProcesses.First().id.ToString() : "";
+            lblSizeSuspended.Text = suspendedProcesses.Count > 0 ? suspendedProcesses.First().Size.ToString() : "";
+        }
     }
 }
